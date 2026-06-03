@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import nodemailer from "nodemailer";
 
-// Rate limiter in-memory (best-effort em serverless — reseta por instância)
 const tentativas = new Map<string, { count: number; resetAt: number }>();
 const LIMITE_POR_MINUTO = 3;
 
