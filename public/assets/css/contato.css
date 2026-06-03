@@ -231,3 +231,90 @@ html {
     color: black;
     scale: 1.02;
 }
+
+/* ===== RESPONSIVIDADE ===== */
+
+@media (max-width: 900px) {
+    .tituloPagina h1 {
+        font-size: 36px;
+        margin-bottom: 60px;
+    }
+
+    .tituloPagina p {
+        font-size: 16px;
+        margin-bottom: 120px;
+    }
+
+    .contatoFormulario {
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+    }
+
+    .contatos {
+        margin-left: 5%;
+        margin-right: 5%;
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .formContato {
+        margin-left: 5%;
+        margin-right: 5%;
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .formContato input[type="text"],
+    .formContato input[type="tel"],
+    .formContato input[type="email"],
+    .formContato textarea {
+        width: 100%;
+    }
+
+    .mensagemFormulario {
+        width: 100%;
+    }
+
+    .divMaps {
+        width: 90%;
+        margin-top: 60px;
+    }
+}
+
+@media (max-width: 600px) {
+    .tituloPagina h1 {
+        font-size: 26px;
+        margin-bottom: 40px;
+        margin-top: 30px;
+    }
+
+    .tituloPagina p {
+        font-size: 15px;
+        margin-top: -60px;
+        margin-bottom: 80px;
+    }
+
+    .formContato input[type="submit"] {
+        width: 100%;
+    }
+
+    .divMaps {
+        width: 95%;
+        height: 280px;
+        margin-top: 40px;
+        margin-bottom: 50px;
+    }
+
+    .tituloMaps h1 {
+        font-size: 22px;
+        margin-top: 60px;
+    }
+
+    .listEmail,
+    .listTel,
+    .listEndereco,
+    .listHorario {
+        font-size: 15px;
+    }
+}

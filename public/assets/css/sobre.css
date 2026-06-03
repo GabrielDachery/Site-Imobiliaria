@@ -163,3 +163,130 @@
     font-weight: 600;
     font-size: 18px;
 }
+
+/* ===== RESPONSIVIDADE ===== */
+
+@media (max-width: 1024px) {
+    .heroSobre {
+        flex-direction: column;
+        text-align: center;
+        margin-right: 5%;
+        margin-left: 5%;
+        gap: 30px;
+    }
+
+    .heroSobre img {
+        width: 100%;
+        max-width: 520px;
+        height: 280px;
+        top: 0;
+    }
+
+    .divHeroSobre h1 {
+        font-size: 44px;
+        line-height: 1.2;
+    }
+
+    .mondialleSobre {
+        font-size: 54px;
+    }
+
+    .textoIntro {
+        margin-right: 0;
+        font-size: 18px;
+    }
+
+    .divPorque {
+        flex-direction: column;
+        align-items: center;
+        padding-top: 80px;
+    }
+
+    .divPorque img {
+        width: 100%;
+        max-width: 520px;
+        height: 320px;
+    }
+
+    .textPorque {
+        margin-left: 0;
+        margin-top: 30px;
+        text-align: center;
+        padding: 0 5%;
+    }
+
+    .textPorque span {
+        justify-content: center;
+        margin-left: 0;
+    }
+
+    .divPrincipal {
+        padding-top: 140px;
+    }
+}
+
+@media (max-width: 768px) {
+    .divHeroSobre h1 {
+        font-size: 30px;
+        line-height: 1.3;
+    }
+
+    .mondialleSobre {
+        font-size: 38px;
+    }
+
+    .institucional {
+        font-size: 13px;
+        line-height: 40px;
+        margin-bottom: -30px;
+    }
+
+    .textoIntro {
+        font-size: 15px;
+    }
+
+    .heroSobre {
+        margin-right: 4%;
+        margin-left: 4%;
+    }
+
+    .divPrincipal {
+        padding-top: 80px;
+    }
+
+    .textProposito p {
+        padding: 30px 6% 30px 6%;
+        font-size: 17px;
+    }
+
+    .textPorque h2 {
+        font-size: 28px;
+    }
+
+    .textPorque p {
+        font-size: 15px;
+    }
+
+    .textPorque span {
+        font-size: 17px;
+        gap: 14px;
+    }
+
+    .divPorque {
+        margin-left: 4%;
+        margin-right: 4%;
+        padding-top: 50px;
+    }
+
+    .citacao {
+        padding: 40px 4% 40px 4%;
+    }
+
+    .citacao h3 {
+        font-size: 17px;
+    }
+
+    .citacao p {
+        font-size: 15px;
+    }
+}
