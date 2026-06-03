@@ -251,3 +251,81 @@ form label{
     scale: 1.05;
     cursor: pointer;
 }
+
+/* ===== RESPONSIVIDADE ===== */
+
+@media (max-width: 1024px) {
+    .heroImages,
+    .cirBlur,
+    .cirBlur2 {
+        display: none;
+    }
+
+    .formAnuncio {
+        width: 85%;
+        padding: 40px 30px;
+        margin-bottom: -80px;
+    }
+
+    .tituloHero {
+        font-size: 44px;
+        line-height: 64px;
+    }
+
+    .tituloHero span {
+        font-size: 54px;
+    }
+
+    .textoHero {
+        margin: -40px 10% 60px 10%;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        margin-top: 40px;
+    }
+
+    .hero h3 {
+        font-size: 14px;
+        letter-spacing: 2px;
+    }
+
+    .tituloHero {
+        font-size: 34px;
+        line-height: 50px;
+    }
+
+    .tituloHero span {
+        font-size: 42px;
+    }
+
+    .retangulo {
+        width: 85%;
+        top: -100px;
+    }
+
+    .textoHero {
+        margin: -30px 5% 50px 5%;
+        font-size: 16px;
+    }
+
+    .formAnuncio {
+        width: 92%;
+        padding: 30px 20px;
+        margin-bottom: -50px;
+    }
+
+    .formAnuncio h2 {
+        font-size: 20px;
+        margin-bottom: 30px;
+    }
+
+    .formAnuncio input[type="submit"] {
+        width: 100%;
+    }
+
+    .paginaAnunciar {
+        margin-bottom: 120px;
+    }
+}
