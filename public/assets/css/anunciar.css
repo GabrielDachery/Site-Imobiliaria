@@ -252,6 +252,28 @@ form label{
     cursor: pointer;
 }
 
+.formAnuncio input[type="submit"]:disabled {
+    opacity: 0.6;
+    scale: 1;
+    cursor: not-allowed;
+}
+
+.mensagemFormulario {
+    margin: 16px auto 0;
+    max-width: 450px;
+    font-family: 'Poppins-medium';
+    font-size: 14px;
+    text-align: center;
+}
+
+.mensagemFormulario.sucesso {
+    color: #2ecc71;
+}
+
+.mensagemFormulario.erro {
+    color: #ff5c5c;
+}
+
 /* ===== RESPONSIVIDADE ===== */
 
 @media (max-width: 1024px) {
