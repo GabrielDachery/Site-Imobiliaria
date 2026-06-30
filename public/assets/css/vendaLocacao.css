@@ -261,3 +261,76 @@
     opacity: 0.4;
     cursor: not-allowed;
 }
+
+/* ===== RESPONSIVIDADE ===== */
+
+@media (max-width: 1440px) {
+    .gridImoveis2 {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 1060px;
+        margin: 0 auto;
+    }
+
+    .destaque2 {
+        padding: 30px 40px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .gridImoveis2 {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 720px;
+        margin: 0 auto;
+    }
+
+    .tituloPagina h1 {
+        font-size: 36px;
+        margin-bottom: 60px;
+    }
+
+    .destaque2 {
+        padding: 30px 20px;
+    }
+
+    .resultadoTitulo h2 {
+        margin-left: 28%;
+        margin-right: 28%;
+    }
+}
+
+@media (max-width: 600px) {
+    .gridImoveis2 {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .tituloPagina h1 {
+        font-size: 26px;
+        margin-bottom: 30px;
+        margin-top: 30px;
+    }
+
+    .resultadoTitulo h2 {
+        margin-left: 8%;
+        margin-right: 8%;
+        padding-top: 160px;
+    }
+
+    .destaque2 {
+        padding: 20px 16px;
+    }
+
+    .verDetalhes {
+        padding: 14px 30px;
+    }
+
+    .divPrincipal2 {
+        top: -100px;
+    }
+
+    .tituloDestaques {
+        font-size: 26px;
+        margin-bottom: 30px;
+    }
+}

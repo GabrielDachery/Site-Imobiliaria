@@ -31,7 +31,7 @@ export default function Home({
       <section className="hero">
         <div className="textoPrincipal">
           <h1>
-            Encontre o imovel ideal <br />
+            Encontre o imóvel ideal <br />
             <span className="linhaHero">
               <span>com a </span>
               <span
