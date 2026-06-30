@@ -37,12 +37,35 @@ a {
     text-decoration: none;
 }
 
+a,
+button,
+input,
+label,
+.dropdownAlternar {
+    touch-action: manipulation;
+}
+
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 .dropdownAlternar:focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }
 
 /*Header do site*/
@@ -531,7 +554,7 @@ section.busca {
 }
 
 .botaoBusca {
-    position: absolute;
+    position: relative;
     left: 50%;
     bottom: 0;
     transform: translate(-50%, 50%);
@@ -863,11 +886,14 @@ section.busca {
     display: none;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     gap: 6px;
     background: none;
     border: none;
     cursor: pointer;
     padding: 8px;
+    min-width: 44px;
+    min-height: 44px;
     position: relative;
     z-index: 1001;
 }
@@ -900,57 +926,67 @@ section.busca {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.97);
+    background: rgba(0, 0, 0, 0.94);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     z-index: 1000;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 24px;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 12px;
+    padding: 90px 18px 28px;
+    overflow-y: auto;
+    animation: mobileMenuFade 0.25s ease;
+}
+
+@keyframes mobileMenuFade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .mobileMenu nav {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 4px;
+    gap: 12px;
     width: 100%;
 }
 
-.mobileMenu nav a {
+.mobileMenu nav a,
+.mobileAnuncie {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     text-align: center;
-    font-size: 22px;
-    color: #fff;
+    font-size: 18px;
+    color: var(--color-text-dark);
+    background: var(--color-surface);
     font-family: var(--font-medium);
-    padding: 16px 40px;
-    border-radius: 50px;
-    transition: background 0.2s, color 0.2s;
+    padding: 18px 24px;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
 .mobileMenu nav a:hover,
+.mobileAnuncie:hover {
+    background: #ededed;
+    transform: translateY(-1px);
+}
+
 .mobileMenu nav a.is-active {
-    background: rgba(255, 255, 255, 0.08);
-    color: var(--color-accent);
+    background: var(--color-accent);
+    color: var(--color-text-dark);
 }
 
 .mobileAnuncie {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: #000;
-    background: var(--color-accent);
-    padding: 16px 48px;
-    border-radius: 50px;
-    font-family: var(--font-medium);
-    font-size: 18px;
-    margin-top: 20px;
-    transition: background 0.2s, color 0.2s;
-}
-
-.mobileAnuncie:hover {
-    background: #fff;
+    margin-top: 0;
 }
 
 @media (max-width: 1024px) {
@@ -997,6 +1033,19 @@ section.busca {
         justify-content: center;
     }
 
+    .destaque {
+        padding: 150px 40px;
+    }
+
+    .gridImoveis {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 24px;
+    }
+
+    .cardImovel {
+        max-width: none;
+    }
+
     .footer {
         padding: 40px 40px 150px;
     }
@@ -1039,6 +1088,12 @@ section.busca {
 
     .textoPrincipal {
         font-size: 22px;
+        margin-top: 70px;
+        letter-spacing: 1px;
+    }
+
+    .linhaHero {
+        gap: 14px;
     }
 
     .imagesSection {
@@ -1064,12 +1119,13 @@ section.busca {
 
     .caixaBusca {
         margin: 0 16px;
-        padding: 24px 16px 120px;
+        padding: 24px 16px 24px;
     }
 
     .dropdownFiltro,
     .filtroPreco,
-    .campoCodigo {
+    .campoCodigo,
+    .botaoBuscar {
         width: 100%;
         flex-basis: 100%;
     }
@@ -1079,22 +1135,69 @@ section.busca {
     }
 
     .gridBuscaBaixo {
-        padding: 0 0 10px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+        margin-top: 16px;
+        padding: 0;
     }
 
-    .botaoBusca {
-        left: 50%;
-        width: calc(100% - 32px);
+    .filtroPreco {
+        order: 1;
+    }
+
+    .campoCodigo {
+        order: 2;
+    }
+
+    .botaoBuscar {
+        order: 3;
+    }
+
+    .inputCodigo {
+        margin-top: 0;
     }
 
     .btnBuscar {
+        position: static;
+        top: auto;
+        left: auto;
+        transform: none;
         width: 100%;
-        padding: 22px 24px;
+        padding: 20px 24px;
         font-size: 18px;
     }
 
     .divPrincipal {
-        top: -80px;
+        top: -60px;
+    }
+
+    .destaque {
+        padding: 80px 16px 50px;
+    }
+
+    .tituloDestaques {
+        font-size: 28px;
+        margin-bottom: 30px;
+    }
+
+    .gridImoveis {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .cardImovel {
+        max-width: 480px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .nomeCard a {
+        font-size: 22px;
+    }
+
+    .verDetalhes {
+        padding: 14px 24px;
     }
 
     .footer {
@@ -1103,7 +1206,57 @@ section.busca {
 
     .divFooter {
         grid-template-columns: 1fr;
-        gap: 32px;
+        gap: 36px;
+        text-align: center;
+        justify-items: center;
+    }
+
+    .footerMarca {
+        max-width: 420px;
+    }
+
+    .footerLogo {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .footerMarca p {
+        text-align: center;
+    }
+
+    .redeSocial {
+        justify-content: center;
+    }
+
+    .footerTexto {
+        text-align: center;
+    }
+
+    .footerIndices {
+        width: 100%;
+    }
+
+    .footerIndices h3 {
+        text-align: center;
+    }
+
+    .footerIndices ul li {
+        text-align: center;
+        margin-bottom: 6px;
+    }
+
+    .footerIndices ul li a {
+        display: inline-block;
+        padding: 10px 16px;
+    }
+
+    .footerContato li {
+        justify-content: center;
+        max-width: none;
+    }
+
+    .fa-map-marker-alt {
+        margin-top: 0;
     }
 
     .mondialleGrandeFooter {
