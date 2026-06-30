@@ -2,9 +2,9 @@ import { useState } from "react";
 import Link from "next/link";
 
 const links = [
-  { href: "/", label: "Inicio", page: "home" },
+  { href: "/", label: "Início", page: "home" },
   { href: "/venda", label: "Venda", page: "venda" },
-  { href: "/locacao", label: "Locacao", page: "locacao" },
+  { href: "/locacao", label: "Locação", page: "locacao" },
   { href: "/sobre", label: "Sobre a Mondialle", page: "sobre" },
   { href: "/contato", label: "Contato", page: "contato" },
 ] as const;
@@ -44,7 +44,7 @@ export default function Header({ pagina }: HeaderProps) {
         </div>
 
         <div className="anuncieHeader">
-          <Link href="/anunciar">Anuncie seu imovel</Link>
+          <Link href="/anunciar">Anuncie seu imóvel</Link>
         </div>
 
         <button

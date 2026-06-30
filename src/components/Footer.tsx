@@ -17,9 +17,9 @@ export default function Footer({ empresa }: FooterProps) {
           />
 
           <p>
-            {empresa.nome} conecta pessoas as melhores oportunidades do mercado
-            imobiliario, com transparencia, seguranca e atendimento
-            personalizado em cada negociacao.
+            {empresa.nome} conecta pessoas às melhores oportunidades do mercado
+            imobiliário, com transparência, segurança e atendimento
+            personalizado em cada negociação.
           </p>
 
           <div className="redeSocial">
@@ -50,7 +50,7 @@ export default function Footer({ empresa }: FooterProps) {
           <h3>Navegação</h3>
           <ul>
             <li>
-              <Link href="/">Inicio</Link>
+              <Link href="/">Início</Link>
             </li>
             <li>
               <Link href="/venda">Venda</Link>
