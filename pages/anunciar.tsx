@@ -1,15 +1,20 @@
 import Layout from "../src/components/Layout";
 import { empresa } from "../src/lib/empresa";
 import { useEffect, useRef, useState } from "react";
+import type { FormEvent } from "react";
 
 const finalidades = [
   { value: "venda", label: "Venda" },
   { value: "locacao", label: "Locação" },
 ];
 
-function DropdownFinalidade() {
+interface DropdownFinalidadeProps {
+  selecionadas: string[];
+  onAlternar: (value: string) => void;
+}
+
+function DropdownFinalidade({ selecionadas, onAlternar }: DropdownFinalidadeProps) {
   const [aberto, setAberto] = useState(false);
-  const [selecionadas, setSelecionadas] = useState<string[]>([]);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -30,16 +35,6 @@ function DropdownFinalidade() {
         .filter((finalidade) => selecionadas.includes(finalidade.value))
         .map((finalidade) => finalidade.label)
         .join(", ");
-
-  function alternarFinalidade(value: string) {
-    setSelecionadas((valoresAtuais) => {
-      if (valoresAtuais.includes(value)) {
-        return valoresAtuais.filter((item) => item !== value);
-      }
-
-      return [...valoresAtuais, value];
-    });
-  }
 
   return (
     <div
@@ -65,8 +60,7 @@ function DropdownFinalidade() {
               name="finalidade"
               value={finalidade.value}
               checked={selecionadas.includes(finalidade.value)}
-              onChange={() => alternarFinalidade(finalidade.value)}
-              required
+              onChange={() => onAlternar(finalidade.value)}
             />
             <span className="checkboxFinalidade" />
             <span>{finalidade.label}</span>
@@ -78,6 +72,84 @@ function DropdownFinalidade() {
 }
 
 export default function AnunciarPage() {
+  const [finalidadesSelecionadas, setFinalidadesSelecionadas] = useState<string[]>([]);
+  const [status, setStatus] = useState("");
+  const [tipoStatus, setTipoStatus] = useState<"sucesso" | "erro">("sucesso");
+  const [enviando, setEnviando] = useState(false);
+
+  function alternarFinalidade(value: string) {
+    setFinalidadesSelecionadas((valoresAtuais) =>
+      valoresAtuais.includes(value)
+        ? valoresAtuais.filter((item) => item !== value)
+        : [...valoresAtuais, value],
+    );
+  }
+
+  async function enviarFormulario(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (finalidadesSelecionadas.length === 0) {
+      setTipoStatus("erro");
+      setStatus("Selecione a finalidade do imóvel.");
+      return;
+    }
+
+    const form = event.currentTarget;
+    const dados = new FormData(form);
+
+    const finalidadeTexto = finalidades
+      .filter((finalidade) => finalidadesSelecionadas.includes(finalidade.value))
+      .map((finalidade) => finalidade.label)
+      .join(", ");
+
+    const tipoImovel = String(dados.get("tipoImovel") ?? "").trim();
+    const cidade = String(dados.get("cidade") ?? "").trim();
+    const bairro = String(dados.get("bairro") ?? "").trim();
+    const mensagemUsuario = String(dados.get("mensagem") ?? "").trim();
+
+    const mensagem = [
+      `Tipo do imóvel: ${tipoImovel}`,
+      `Finalidade: ${finalidadeTexto}`,
+      `Cidade: ${cidade}`,
+      `Bairro: ${bairro}`,
+      "",
+      `Mensagem: ${mensagemUsuario || "(não informada)"}`,
+    ].join("\n");
+
+    setEnviando(true);
+    try {
+      const resposta = await fetch("/api/enviarEmail", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nome: dados.get("nome"),
+          email: dados.get("email"),
+          telefone: dados.get("telefone"),
+          assunto: `Anúncio de imóvel${tipoImovel ? ` - ${tipoImovel}` : ""}`,
+          mensagem,
+        }),
+      });
+      const resultado = await resposta.json();
+
+      if (resposta.ok) {
+        setTipoStatus("sucesso");
+        setStatus(resultado.mensagem || "Solicitação enviada com sucesso.");
+        form.reset();
+        setFinalidadesSelecionadas([]);
+      } else {
+        setTipoStatus("erro");
+        setStatus(
+          resultado.mensagem || "Não foi possível enviar. Tente novamente.",
+        );
+      }
+    } catch {
+      setTipoStatus("erro");
+      setStatus("Não foi possível enviar. Tente novamente.");
+    } finally {
+      setEnviando(false);
+    }
+  }
+
   return (
     <Layout
       title="Anunciar imovel"
@@ -114,7 +186,7 @@ export default function AnunciarPage() {
             Preencha seus dados e as informações do imóvel. Em breve, entraremos
             em contato para dar continuidade ao atendimento.
           </h2>
-          <form action="">
+          <form onSubmit={enviarFormulario}>
             <label htmlFor="campoNome">Nome completo*</label> <br />
             <input type="text" id="campoNome" name="nome" required />{" "}
             <br />
@@ -128,7 +200,10 @@ export default function AnunciarPage() {
             <input type="text" name="tipoImovel" id="campoTipo" placeholder="Apartamento" required />
             <br />
             <label>Finalidade de Imóvel*</label> <br />
-            <DropdownFinalidade />
+            <DropdownFinalidade
+              selecionadas={finalidadesSelecionadas}
+              onAlternar={alternarFinalidade}
+            />
             <br />
             <label htmlFor="campoCidade">Cidade*</label> <br />
             <input type="text" name="cidade" id="campoCidade" required />
@@ -139,7 +214,14 @@ export default function AnunciarPage() {
             <label htmlFor="campoMensagem">Mensagem</label> <br />
             <textarea name="mensagem" id="campoMensagem" />
             <br />
-            <input type="submit" value="Enviar" />
+            <input
+              type="submit"
+              value={enviando ? "Enviando..." : "Enviar"}
+              disabled={enviando}
+            />
+            {status && (
+              <p className={`mensagemFormulario ${tipoStatus}`}>{status}</p>
+            )}
           </form>
         </div>
       </main>
