@@ -82,7 +82,7 @@
     position: relative;
     border-radius: 18px;
     overflow: hidden;
-    height: 650px;
+    height: clamp(260px, 52vw, 650px);
     margin-bottom: 44px;
 }
 
