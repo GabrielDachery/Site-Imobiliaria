@@ -51,6 +51,8 @@ html {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    row-gap: 40px;
 }
 
 .contatos{
@@ -64,6 +66,12 @@ html {
     display: flex;
     flex-direction: column;
     gap: 30px;
+}
+
+.listaContato h3{
+    min-width: 0;
+    overflow-wrap: anywhere;
+    margin: 0;
 }
 
 .listEmail i,
@@ -82,11 +90,6 @@ html {
     font-family: 'Poppins-medium';
 }
 
-.listTel{
-    margin-top: -25px;
-    margin-bottom: 10px;
-}
-
 .listHorario {
     display: flex;
     align-items: flex-start;
@@ -95,15 +98,11 @@ html {
 }
 
 .listHorario i {
-    margin-top: 6px;
+    margin-top: 2px;
 }
 
-.listHorarioText h3 {   
-    margin-top: 5px;
-}
-
-.listEndereco h3{
-    margin-top: -11px;
+.listHorarioText p {
+    margin-bottom: 0;
 }
 
 
@@ -127,7 +126,7 @@ html {
 .formContato input[type="email"]{
     border-radius: 15px;
     border: none;
-    width: 400px;
+    width: min(400px, 100%);
     height: 50px;
     margin-bottom: -5px;
     padding-left: 20px;
@@ -138,7 +137,7 @@ html {
 .formContato textarea {
     border-radius: 15px;
     border: none;
-    width: 400px;
+    width: min(400px, 100%);
     height: 120px;
     margin-bottom: 15px;
     padding: 15px 0px 0px 19px;
@@ -176,7 +175,7 @@ html {
 }
 
 .mensagemFormulario {
-    width: 400px;
+    width: min(400px, 100%);
     margin: 15px 0 0;
     font-family: 'Poppins-medium';
     font-size: 14px;
@@ -242,7 +241,9 @@ html {
 
     .tituloPagina p {
         font-size: 16px;
-        margin-bottom: 120px;
+        margin-top: -40px;
+        margin-bottom: 150px;
+        padding: 0 20px;
     }
 
     .contatoFormulario {
@@ -252,17 +253,15 @@ html {
     }
 
     .contatos {
-        margin-left: 5%;
-        margin-right: 5%;
-        width: 100%;
-        max-width: 500px;
+        margin-left: 0;
+        margin-right: 0;
+        width: min(500px, calc(100% - 32px));
     }
 
     .formContato {
-        margin-left: 5%;
-        margin-right: 5%;
-        width: 100%;
-        max-width: 500px;
+        margin-left: 0;
+        margin-right: 0;
+        width: min(500px, calc(100% - 32px));
     }
 
     .formContato input[type="text"],
@@ -291,8 +290,9 @@ html {
 
     .tituloPagina p {
         font-size: 15px;
-        margin-top: -60px;
-        margin-bottom: 80px;
+        margin-top: -20px;
+        margin-bottom: 140px;
+        padding: 0 20px;
     }
 
     .formContato input[type="submit"] {
