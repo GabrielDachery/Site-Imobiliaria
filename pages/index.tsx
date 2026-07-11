@@ -27,7 +27,7 @@ export default function Home({
   consulta: ConsultaImoveis;
 }) {
   return (
-    <Layout title="Mondialle Imobiliaria" page="home" empresa={empresa}>
+    <Layout title="Mondialle Imobiliária" page="home" empresa={empresa}>
       <section className="hero">
         <div className="textoPrincipal">
           <h1>
@@ -58,7 +58,7 @@ export default function Home({
         <div className="imagesSection">
           <img
             src="/assets/images/Casas_2d.png"
-            alt="Ilustracao da cidade"
+            alt="Ilustração da cidade"
             className="cidadeLinha"
           />
           <img
@@ -75,14 +75,14 @@ export default function Home({
         busca={busca}
         catalogo={catalogo}
         consulta={consulta}
-        textoBotao="Buscar imoveis"
+        textoBotao="Buscar imóveis"
       />
 
       <main className="principal">
         <section className="sectionPrincipal">
           <div className="divPrincipal">
             <div className="destaque">
-              <h2 className="tituloDestaques">Imoveis em destaque</h2>
+              <h2 className="tituloDestaques">Imóveis em destaque</h2>
               <div className="gridImoveis">
                 {imoveisDestaque.map((imovel) => (
                   <ImovelCard key={imovel.id} imovel={imovel} />

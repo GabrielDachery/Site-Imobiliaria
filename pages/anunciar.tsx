@@ -152,7 +152,7 @@ export default function AnunciarPage() {
 
   return (
     <Layout
-      title="Anunciar imovel"
+      title="Anunciar imóvel"
       page="anunciar"
       empresa={empresa}
       stylesheets={["/assets/css/anunciar.css"]}
@@ -172,7 +172,7 @@ export default function AnunciarPage() {
             <br />
             Na Mondialle Imobiliária, oferecemos um serviço personalizado para
             proprietários que desejam anunciar com mais segurança e
-            transparência
+            transparência.
           </p>
           <div className="heroImages">
             <img src="/assets/images/Terra.png" alt="Planeta Terra" className="terra" />
@@ -199,7 +199,7 @@ export default function AnunciarPage() {
             <label htmlFor="campoTipo">Tipo do imóvel*</label> <br />
             <input type="text" name="tipoImovel" id="campoTipo" placeholder="Apartamento" required />
             <br />
-            <label>Finalidade de Imóvel*</label> <br />
+            <label>Finalidade do imóvel*</label> <br />
             <DropdownFinalidade
               selecionadas={finalidadesSelecionadas}
               onAlternar={alternarFinalidade}

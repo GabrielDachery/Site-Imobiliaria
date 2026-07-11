@@ -18,7 +18,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       busca,
       catalogo,
       consulta: query,
-      cabecalho: "Catalogo completo",
+      cabecalho: "Catálogo completo",
       pagina: "imoveis",
       acao: "/imoveis",
     },

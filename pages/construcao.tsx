@@ -4,7 +4,7 @@ import { empresa } from "../src/lib/empresa";
 export default function PaginaConstrucao() {
   return (
     <Layout
-      title="Em Construcao"
+      title="Em construção"
       page="construcao"
       empresa={empresa}
       stylesheets={["/assets/css/construcao.css"]}
