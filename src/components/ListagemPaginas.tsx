@@ -63,7 +63,12 @@ useEffect(() => {
           <section className="resultadoQuant">
             <div className="result">
               <div className="resultadoTitulo">
-                <h2>{busca.itens.length} imoveis encontrados</h2>
+                <h2>
+                  {busca.itens.length}{" "}
+                  {busca.itens.length === 1
+                    ? "imóvel encontrado"
+                    : "imóveis encontrados"}
+                </h2>
               </div>
             </div>
 
@@ -79,7 +84,7 @@ useEffect(() => {
               <div className="naoEncontrado">
                 <h3>Nenhum resultado encontrado.</h3>
                 <p>
-                  Altere filtros, cidade ou faixa de preco para ver outras
+                  Altere filtros, cidade ou faixa de preço para ver outras
                   oportunidades.
                 </p>
               </div>
