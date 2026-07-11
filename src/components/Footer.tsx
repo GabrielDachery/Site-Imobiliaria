@@ -12,7 +12,7 @@ export default function Footer({ empresa }: FooterProps) {
         <div className="footerMarca">
           <img
             src="/assets/images/Logo branca sem fundo.png"
-            alt="Logo Mondialle no rodape"
+            alt="Logo Mondialle no rodapé"
             className="footerLogo"
           />
 

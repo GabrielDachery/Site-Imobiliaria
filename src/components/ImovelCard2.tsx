@@ -31,7 +31,7 @@ export default function ImovelCard({ imovel }: ImovelCardProps) {
             </p>
           </div>
           <span>
-            <i className="fa-solid fa-ruler-combined" /> {imovel.area} m2
+            <i className="fa-solid fa-ruler-combined" /> {imovel.area} m²
           </span>
         </div>
 
@@ -48,10 +48,10 @@ export default function ImovelCard({ imovel }: ImovelCardProps) {
         </div>
 
         <div className="preco">
-          <p>Preco</p>
+          <p>Preço</p>
           <strong>
             R$ {formatarPreco(imovel.preco)}
-            {imovel.finalidade === "locacao" ? "/mes" : ""}
+            {imovel.finalidade === "locacao" ? "/mês" : ""}
           </strong>
         </div>
 

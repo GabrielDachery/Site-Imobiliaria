@@ -148,7 +148,7 @@ export default function FormBusca({
             count: catalogo.contagens.finalidades[finalidade] || 0,
           }))}
           renderLabel={(option: DropdownOption) =>
-            `${option.value === "venda" ? "Venda" : "Locacao"} (${option.count})`
+            `${option.value === "venda" ? "Venda" : "Locação"} (${option.count})`
           }
         />
 
@@ -252,7 +252,7 @@ export default function FormBusca({
         <div className="campoCodigo">
           <input
             type="text"
-            placeholder="Codigo do imovel"
+            placeholder="Código do imóvel"
             className="inputCodigo"
             name="codigo"
             defaultValue={codigoSelecionado}
