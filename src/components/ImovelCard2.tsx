@@ -30,9 +30,6 @@ export default function ImovelCard({ imovel }: ImovelCardProps) {
               {imovel.cidade} - {imovel.bairro}
             </p>
           </div>
-          <span>
-            <i className="fa-solid fa-ruler-combined" /> {imovel.area} m²
-          </span>
         </div>
 
         <div className="atributos2">
