@@ -35,7 +35,7 @@ export default function ContatoPage() {
       form.reset();
     } else {
       setTipoStatus("erro");
-      setStatus(resultado.mensagem || "Não foi possivel enviar a mensagem. Tente novamente.");
+      setStatus(resultado.mensagem || "Não foi possível enviar a mensagem. Tente novamente.");
     }
   }
 
@@ -51,7 +51,7 @@ export default function ContatoPage() {
           <h1>Entre em contato</h1>
           <p>
             Estamos prontos para ajudar você a encontrar a melhor solução
-            imobiliária
+            imobiliária.
           </p>
           <div className="cirBlur2" />
         </section>
@@ -74,10 +74,10 @@ export default function ContatoPage() {
                   <div className="listHorarioText">
                     <h3>Nosso horário de atendimento</h3>
                     <p>
-                      Segunda-feira à sexta-feira: <br /> 08:00 à 12:00 - 13:30
-                      à 18:00 <br />
+                      Segunda a sexta-feira: <br /> 08:00 às 12:00 - 13:30 às
+                      18:00 <br />
                       <br />
-                      Sábado: <br /> 08:00 à 12:00
+                      Sábado: <br /> 08:00 às 12:00
                     </p>
                   </div>
                 </li>
