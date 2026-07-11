@@ -23,12 +23,15 @@
 
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    overflow-x: clip;
 }
 
 body {
     margin: 0;
     background-color: var(--color-bg);
     color: var(--color-text);
+    overflow-x: hidden;
     overflow-x: clip;
     font-family: var(--font-light);
 }
@@ -232,6 +235,13 @@ input:focus-visible,
     font-display: swap;
 }
 
+/* Contém os elementos decorativos que sangram para fora da tela
+   (Terra, blur, cidade). Sem isso o navegador mobile alarga o
+   viewport e a página inteira fica reduzida e arrastável. */
+.hero {
+    overflow-x: clip;
+}
+
 .imagesSection {
     position: relative;
     display: flex;
@@ -261,6 +271,8 @@ input:focus-visible,
 
 .cidadeLinha {
     width: min(1200px, 92vw);
+    height: auto;
+    align-self: flex-end;
     margin-left: 2%;
     position: relative;
     z-index: 4;
@@ -438,8 +450,8 @@ section.busca {
 
 
 .filtroPreco {
-    width: min(390px, 100%);
-    flex: 0.17 1 320px;
+    flex: 1 1 320px;
+    max-width: 460px;
     border-radius: 0;
 }
 
@@ -541,7 +553,6 @@ section.busca {
     font-family: var(--font-light);
     color: var(--color-text-dark);
     font-weight: 600;
-    margin-top: 20px;
 }
 
 .inputCodigo::placeholder {
@@ -550,14 +561,16 @@ section.busca {
 }
 
 .campoCodigo {
-    flex: 0 1 390px;
+    flex: 1 1 340px;
+    max-width: 460px;
 }
 
-.botaoBusca {
-    position: relative;
-    left: 50%;
-    bottom: 0;
-    transform: translate(-50%, 50%);
+.botaoBuscar {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
 }
 
 .btnBuscar {
@@ -570,9 +583,6 @@ section.busca {
     font-family: var(--font-medium);
     cursor: pointer;
     transition: 0.3s;
-    position: absolute;
-    top: 150px;
-    left: 36.5%;
 }
 
 .btnBuscar:hover {
@@ -606,7 +616,7 @@ section.busca {
 .gridImoveis {
     color: var(--color-text-dark);
     display: grid;
-    grid-template-columns: repeat(3, 430px);
+    grid-template-columns: repeat(3, minmax(0, 430px));
     justify-content: center;
     gap: 30px;
 }
@@ -833,12 +843,12 @@ section.busca {
 .footerContato li {
     max-width: 420px;
     display: flex;
-    align-items: center; 
+    align-items: flex-start;
     gap: 20px;
 }
 
-.fa-map-marker-alt{
-    margin-top: -30px;
+.footerContato li i {
+    margin-top: 5px;
 }
 
 .creditosFooter {
@@ -925,18 +935,20 @@ section.busca {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 100vh;
+    height: 100dvh;
     background: rgba(0, 0, 0, 0.94);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     z-index: 1000;
     display: flex;
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
     justify-content: flex-start;
-    gap: 12px;
-    padding: 90px 18px 28px;
+    gap: 10px;
+    padding: 128px 20px calc(24px + env(safe-area-inset-bottom, 0px));
     overflow-y: auto;
+    overscroll-behavior: contain;
     animation: mobileMenuFade 0.25s ease;
 }
 
@@ -953,8 +965,9 @@ section.busca {
 .mobileMenu nav {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
     width: 100%;
+    max-width: 420px;
 }
 
 .mobileMenu nav a,
@@ -963,13 +976,14 @@ section.busca {
     align-items: center;
     justify-content: center;
     width: 100%;
+    max-width: 420px;
     text-align: center;
-    font-size: 18px;
+    font-size: 16px;
     color: var(--color-text-dark);
     background: var(--color-surface);
     font-family: var(--font-medium);
-    padding: 18px 24px;
-    border-radius: 16px;
+    padding: 14px 20px;
+    border-radius: 14px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
     transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
@@ -987,6 +1001,24 @@ section.busca {
 
 .mobileAnuncie {
     margin-top: 0;
+}
+
+/* Entre 1025px e 1320px o header inteiro não cabe em uma linha
+   com os espaçamentos padrão — compacta links e botão. */
+@media (max-width: 1320px) {
+    .menuHeader a {
+        padding: 12px 20px;
+        font-size: 15px;
+    }
+
+    .anuncieHeader a {
+        padding: 16px 24px;
+        font-size: 15px;
+    }
+
+    #logoHeader {
+        width: 130px;
+    }
 }
 
 @media (max-width: 1024px) {
@@ -1026,7 +1058,6 @@ section.busca {
 
     .caixaBusca {
         margin: 0 5%;
-        padding-bottom: 110px;
     }
 
     .gridBuscaBaixo {
@@ -1128,6 +1159,7 @@ section.busca {
     .botaoBuscar {
         width: 100%;
         flex-basis: 100%;
+        max-width: none;
     }
 
     .dropdownAlternar {
@@ -1253,10 +1285,6 @@ section.busca {
     .footerContato li {
         justify-content: center;
         max-width: none;
-    }
-
-    .fa-map-marker-alt {
-        margin-top: 0;
     }
 
     .mondialleGrandeFooter {
