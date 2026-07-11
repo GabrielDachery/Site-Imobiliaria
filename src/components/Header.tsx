@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 const links = [
@@ -16,6 +16,52 @@ interface HeaderProps {
 export default function Header({ pagina }: HeaderProps) {
   const [menuAberto, setMenuAberto] = useState(false);
 
+  // Trava o scroll da página enquanto o menu mobile está aberto
+  // (position: fixed também bloqueia o scroll por toque no iOS)
+  useEffect(() => {
+    if (!menuAberto) return;
+
+    const scrollY = window.scrollY;
+    const { style } = document.body;
+    style.position = "fixed";
+    style.top = `-${scrollY}px`;
+    style.left = "0";
+    style.right = "0";
+    style.width = "100%";
+    style.overflowY = "hidden";
+
+    return () => {
+      style.position = "";
+      style.top = "";
+      style.left = "";
+      style.right = "";
+      style.width = "";
+      style.overflowY = "";
+      window.scrollTo(0, scrollY);
+    };
+  }, [menuAberto]);
+
+  // Fecha o menu com Escape e ao voltar para viewport de desktop
+  useEffect(() => {
+    if (!menuAberto) return;
+
+    function aoTeclar(event: KeyboardEvent) {
+      if (event.key === "Escape") setMenuAberto(false);
+    }
+
+    const desktop = window.matchMedia("(min-width: 769px)");
+    function aoRedimensionar(event: MediaQueryListEvent) {
+      if (event.matches) setMenuAberto(false);
+    }
+
+    document.addEventListener("keydown", aoTeclar);
+    desktop.addEventListener("change", aoRedimensionar);
+    return () => {
+      document.removeEventListener("keydown", aoTeclar);
+      desktop.removeEventListener("change", aoRedimensionar);
+    };
+  }, [menuAberto]);
+
   return (
     <header>
       <div className="divHeader">
@@ -23,7 +69,7 @@ export default function Header({ pagina }: HeaderProps) {
           <Link href="/">
             <img
               src="/assets/images/Logo branca sem fundo.png"
-              alt="Logo Mondialle Imobiliaria"
+              alt="Logo Mondialle Imobiliária"
               id="logoHeader"
             />
           </Link>
@@ -51,6 +97,8 @@ export default function Header({ pagina }: HeaderProps) {
           className={`hamburger${menuAberto ? " hamburger-ativo" : ""}`}
           onClick={() => setMenuAberto(!menuAberto)}
           aria-label={menuAberto ? "Fechar menu" : "Abrir menu"}
+          aria-expanded={menuAberto}
+          aria-controls="menuMobile"
         >
           <span></span>
           <span></span>
@@ -59,7 +107,13 @@ export default function Header({ pagina }: HeaderProps) {
       </div>
 
       {menuAberto && (
-        <div className="mobileMenu">
+        <div
+          className="mobileMenu"
+          id="menuMobile"
+          onClick={(event) => {
+            if (event.target === event.currentTarget) setMenuAberto(false);
+          }}
+        >
           <nav>
             {links.map((link) => (
               <Link
