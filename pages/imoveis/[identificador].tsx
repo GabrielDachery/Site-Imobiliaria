@@ -248,7 +248,7 @@ export default function DetalheImovelPage({
                     <i className="fa-solid fa-car diSpecIcon" />
                     <span className="diSpecLabel">Garagem</span>
                     <strong className="diSpecValor">
-                      {imovel.vagas} vagas
+                      {imovel.vagas} {imovel.vagas === 1 ? "vaga" : "vagas"}
                     </strong>
                   </div>
                 )}
