@@ -146,7 +146,7 @@ function montarEmailTexto(dados: {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
-    return res.status(405).json({ mensagem: "Metodo nao permitido." });
+    return res.status(405).json({ mensagem: "Método não permitido." });
   }
 
   const ip =
@@ -160,7 +160,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { nome, email, telefone, assunto, mensagem } = req.body;
 
   if (!nome || !email || !mensagem) {
-    return res.status(400).json({ mensagem: "Preencha os campos obrigatorios." });
+    return res.status(400).json({ mensagem: "Preencha os campos obrigatórios." });
   }
 
   if (
@@ -168,11 +168,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     typeof email !== "string" ||
     typeof mensagem !== "string"
   ) {
-    return res.status(400).json({ mensagem: "Dados invalidos." });
+    return res.status(400).json({ mensagem: "Dados inválidos." });
   }
 
   if (!RE_EMAIL.test(email)) {
-    return res.status(400).json({ mensagem: "Email invalido." });
+    return res.status(400).json({ mensagem: "Email inválido." });
   }
 
   if (nome.length > 100 || email.length > 200 || mensagem.length > 5000) {
@@ -208,7 +208,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     !EMAIL_TO ||
     EMAIL_PASS === "senha-ou-app-password"
   ) {
-    return res.status(500).json({ mensagem: "Credenciais de email nao configuradas." });
+    return res.status(500).json({ mensagem: "Credenciais de email não configuradas." });
   }
 
   try {
