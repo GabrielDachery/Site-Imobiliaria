@@ -43,18 +43,20 @@ export default function SobrePage() {
           <div className="divPorque">
             <img src="/assets/images/Faixada_mondialle.png" alt="Foto do porque" />
             <div className="textPorque">
-              <h2>Porque escolher a Mondialle?</h2>
+              <h2>Por que escolher a Mondialle?</h2>
 
-              <p>Cada cliente possui uma necessidade única. 
-                Por isso, a Mondialle trabalha com atendimento próximo, 
-                estratégia personalizada e total transparência, 
-                oferecendo suporte completo para quem busca segurança e 
+              <p>Cada cliente possui uma necessidade única.
+                Por isso, a Mondialle trabalha com atendimento próximo,
+                estratégia personalizada e total transparência,
+                oferecendo suporte completo para quem busca segurança e
                 tranquilidade em cada decisão.</p>
 
-              <span><i className="fa-solid fa-circle-check" />Atendimento próximo e personalizado</span><br />
-              <span><i className="fa-solid fa-circle-check" />Transparência em todas as etapas</span><br />
-              <span><i className="fa-solid fa-circle-check" />Conhecimento de mercado</span><br />
-              <span><i className="fa-solid fa-circle-check" />Soluções imobiliárias e ambientais</span>
+              <div className="listaPorque">
+                <span><i className="fa-solid fa-circle-check" />Atendimento próximo e personalizado</span>
+                <span><i className="fa-solid fa-circle-check" />Transparência em todas as etapas</span>
+                <span><i className="fa-solid fa-circle-check" />Conhecimento de mercado</span>
+                <span><i className="fa-solid fa-circle-check" />Soluções imobiliárias e ambientais</span>
+              </div>
             </div>
           </div>
 
