@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import type { GetServerSideProps } from "next";
 import Layout from "../../src/components/Layout";
 import ImovelCard from "../../src/components/ImovelCard";
+import LightboxGaleria from "../../src/components/LightboxGaleria";
 import { empresa } from "../../src/lib/empresa";
 import {
   obterImovelPorCodigo,
@@ -30,8 +31,14 @@ export default function DetalheImovelPage({
   const [enviado, setEnviado] = useState(false);
   const [erro, setErro] = useState("");
   const [fotoAtual, setFotoAtual] = useState(0);
+  const [fotoAmpliada, setFotoAmpliada] = useState<number | null>(null);
+
+  const imagensGaleria: string[] = imovel.imagens?.length
+    ? imovel.imagens
+    : [imovel.imagem];
 
   const galeriaRef = useRef<HTMLDivElement>(null);
+  const arrastouGaleria = useRef(false);
   const isDragging = useRef(false);
   const dragStartX = useRef(0);
   const dragScrollLeft = useRef(0);
@@ -71,6 +78,7 @@ export default function DetalheImovelPage({
   function onGaleriaMouseDown(e: React.MouseEvent) {
     if (!galeriaRef.current) return;
     isDragging.current = true;
+    arrastouGaleria.current = false;
     dragStartX.current = e.pageX - galeriaRef.current.offsetLeft;
     dragScrollLeft.current = galeriaRef.current.scrollLeft;
     galeriaRef.current.style.cursor = "grabbing";
@@ -81,6 +89,9 @@ export default function DetalheImovelPage({
     if (!isDragging.current || !galeriaRef.current) return;
     e.preventDefault();
     const x = e.pageX - galeriaRef.current.offsetLeft;
+    if (Math.abs(x - dragStartX.current) > 5) {
+      arrastouGaleria.current = true;
+    }
     galeriaRef.current.scrollLeft = dragScrollLeft.current - (x - dragStartX.current) * 1.5;
   }
 
@@ -160,7 +171,7 @@ export default function DetalheImovelPage({
 
           {/* Galeria */}
           {(() => {
-            const imagens = imovel.imagens?.length ? imovel.imagens : [imovel.imagem];
+            const imagens = imagensGaleria;
             return (
               <div className="diGaleria">
                 <div
@@ -173,11 +184,25 @@ export default function DetalheImovelPage({
                   onScroll={onGaleriaScroll}
                 >
                   {imagens.map((src, i) => (
-                    <div key={i} className="diGalItem">
+                    <div
+                      key={i}
+                      className="diGalItem"
+                      onClick={() => {
+                        if (!arrastouGaleria.current) setFotoAmpliada(i);
+                      }}
+                    >
                       <img src={src} alt={`${imovel.titulo} — foto ${i + 1}`} draggable={false} />
                     </div>
                   ))}
                 </div>
+                <button
+                  type="button"
+                  className="diGalAmpliar"
+                  aria-label="Ampliar foto"
+                  onClick={() => setFotoAmpliada(fotoAtual)}
+                >
+                  <i className="fa-solid fa-expand" /> <span>Ampliar</span>
+                </button>
                 {imagens.length > 1 && (
                   <>
                     <button
@@ -343,6 +368,15 @@ export default function DetalheImovelPage({
           </section>
         )}
       </main>
+
+      {fotoAmpliada !== null && (
+        <LightboxGaleria
+          imagens={imagensGaleria}
+          titulo={imovel.titulo}
+          indiceInicial={fotoAmpliada}
+          onFechar={() => setFotoAmpliada(null)}
+        />
+      )}
     </Layout>
   );
 }
