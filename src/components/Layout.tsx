@@ -2,6 +2,7 @@ import Head from "next/head";
 import type { ReactNode } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
+import BotaoWhatsApp from "./BotaoWhatsApp";
 import type { Empresa } from "../lib/types";
 
 interface LayoutProps {
@@ -47,6 +48,7 @@ export default function Layout({
       {showHeader && <Header pagina={page} />}
       {children}
       {showFooter && <Footer empresa={empresa} />}
+      <BotaoWhatsApp empresa={empresa} />
     </>
   );
 }

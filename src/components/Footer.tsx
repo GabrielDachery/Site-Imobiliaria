@@ -41,6 +41,17 @@ export default function Footer({ empresa }: FooterProps) {
             </a>
           </div>
 
+          {(empresa.creci || (empresa.corretores && empresa.corretores.length > 0)) && (
+            <div className="footerCreci">
+              {empresa.creci && <span>{empresa.nome} - {empresa.creci}</span>}
+              {empresa.corretores?.map((c) => (
+                <span key={c.nome}>
+                  {c.nome} - {c.creci}
+                </span>
+              ))}
+            </div>
+          )}
+
           <span className="footerTexto">
             © 2026 {empresa.nome}. Todos os direitos reservados.
           </span>
@@ -72,6 +83,18 @@ export default function Footer({ empresa }: FooterProps) {
           <ul className="footerContato">
             <li><i className="fas fa-envelope"></i> {empresa.email}</li>
             <li><i className="fas fa-phone"></i>  {empresa.telefone}</li>
+            {empresa.whatsapp && (
+              <li>
+                <i className="fa-brands fa-whatsapp"></i>{" "}
+                <a
+                  href={`https://wa.me/${empresa.whatsapp}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Chamar no WhatsApp
+                </a>
+              </li>
+            )}
             <li><i className="fas fa-map-marker-alt"></i> {empresa.endereco}</li>
           </ul>
         </div>
