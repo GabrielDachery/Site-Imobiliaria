@@ -5,6 +5,12 @@ export interface Empresa {
   instagram: string;
   facebook: string;
   endereco: string;
+  /** WhatsApp só com dígitos e DDI, ex.: 5542999828281 (usado nos links wa.me). */
+  whatsapp?: string;
+  /** CRECI da imobiliária (pessoa jurídica). Aparece no rodapé quando preenchido. */
+  creci?: string;
+  /** Corretores com CRECI, exibidos no rodapé. */
+  corretores?: { nome: string; creci: string }[];
 }
 
 export interface Imovel {
