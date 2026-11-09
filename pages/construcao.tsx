@@ -45,7 +45,7 @@ export default function PaginaConstrucao() {
               <i className="fa-brands fa-facebook" />
             </a>
 
-            <a href="" aria-label="Whatsapp" target="_blank" rel="noopener noreferrer">
+            <a href={empresa.whatsapp ? `https://wa.me/${empresa.whatsapp}` : "#"} aria-label="Whatsapp" target="_blank" rel="noopener noreferrer">
                 <i className="fa-brands fa-whatsapp" />
             </a>
           </div>
