@@ -11,14 +11,52 @@ import {
 import { formatarPreco } from "../../src/lib/formatar";
 import type { Imovel } from "../../src/lib/types";
 
+interface Compartilhamento {
+  url: string;
+  imagem: string;
+  descricao: string;
+}
+
 interface DetalheImovelPageProps {
   imovel: Imovel;
   imoveisRelacionados: Imovel[];
+  compartilhamento: Compartilhamento;
+}
+
+/** Transforma um caminho do site (/assets/...) em endereço completo; endereços completos ficam como estão. */
+function urlAbsoluta(src: string, siteUrl: string): string {
+  if (/^https?:\/\//.test(src)) return src;
+  return `${siteUrl}${src.startsWith("/") ? "" : "/"}${encodeURI(src)}`;
+}
+
+/**
+ * Imagem da prévia do link. Fotos guardadas no Supabase Storage têm, na mesma pasta, um arquivo
+ * "og.jpg" (1200x630, leve) feito para o WhatsApp; as demais usam a própria foto principal.
+ */
+function imagemParaCompartilhar(src: string, siteUrl: string): string {
+  const completa = urlAbsoluta(src, siteUrl);
+  if (completa.includes("/storage/v1/object/public/")) {
+    return completa.replace(/[^/]+$/, "og.jpg");
+  }
+  return completa;
+}
+
+function montarDescricaoCompartilhar(imovel: Imovel): string {
+  const partes: string[] = [
+    `R$ ${formatarPreco(imovel.preco)}${imovel.finalidade === "locacao" ? "/mês" : ""}`,
+  ];
+  if (imovel.area > 0) partes.push(`${formatarPreco(imovel.area)} m²`);
+  if (imovel.quartos > 0) {
+    partes.push(`${imovel.quartos} ${imovel.quartos === 1 ? "quarto" : "quartos"}`);
+  }
+  partes.push(`${imovel.bairro} - ${imovel.cidade.trim()}`);
+  return partes.join(" • ");
 }
 
 export default function DetalheImovelPage({
   imovel,
   imoveisRelacionados,
+  compartilhamento,
 }: DetalheImovelPageProps) {
   const [form, setForm] = useState({
     nome: "",
@@ -138,6 +176,9 @@ export default function DetalheImovelPage({
       page="imovel"
       empresa={empresa}
       stylesheets={["/assets/css/detalheImovel.css"]}
+      descricao={compartilhamento.descricao}
+      imagemCompartilhar={compartilhamento.imagem}
+      urlCanonica={compartilhamento.url}
     >
       <main className="paginaImovel">
         <section className="tituloPagina">
@@ -363,10 +404,22 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     .filter((i) => i.id !== imovel.id)
     .slice(0, 3);
 
+  const siteUrl = (process.env.SITE_URL || "https://mondialleimobiliaria.com.br").replace(
+    /\/$/,
+    "",
+  );
+  const fotoPrincipal = imovel.imagens?.[0] ?? imovel.imagem;
+  const compartilhamento: Compartilhamento = {
+    url: `${siteUrl}/imoveis/${imovel.codigo}`,
+    imagem: imagemParaCompartilhar(fotoPrincipal, siteUrl),
+    descricao: montarDescricaoCompartilhar(imovel),
+  };
+
   return {
     props: {
       imovel,
       imoveisRelacionados,
+      compartilhamento,
     },
   };
 };
